@@ -24,4 +24,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "TikTokCompose"
 include(":app")
+include(":keyboardDikra")
  
