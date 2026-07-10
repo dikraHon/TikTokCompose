@@ -18,10 +18,18 @@ fun KeyboardActions(
     onSpaceClick: () -> Unit,
     onConfirmClick: () -> Unit
 ) {
+    val colors = LocalKeyboardColors.current
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 6.dp, vertical = if (isLandscape) 2.dp else 4.dp),
+            .padding(
+                horizontal = KeyboardDimens.RowHorizontalPadding + 2.dp,
+                vertical = if (isLandscape) {
+                    KeyboardDimens.KeyPadding
+                } else {
+                    KeyboardDimens.RowHorizontalPadding
+                }
+            ),
         horizontalArrangement = Arrangement.spacedBy(space = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -30,7 +38,7 @@ fun KeyboardActions(
             onClick = onDeleteClick,
             onLongClick = onDeleteAllClick,
             modifier = Modifier.weight(weight = 1f),
-            containerColor = KeyboardColors.ActionDelete
+            containerColor = colors.actionDelete
         )
         ActionButton(
             text = "Space",
@@ -47,7 +55,7 @@ fun KeyboardActions(
             },
             onClick = onConfirmClick,
             modifier = Modifier.weight(weight = 1f),
-            containerColor = KeyboardColors.ActionConfirm
+            containerColor = colors.actionConfirm
         )
     }
 }

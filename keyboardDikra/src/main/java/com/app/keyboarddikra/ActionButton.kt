@@ -18,7 +18,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -32,9 +31,10 @@ fun ActionButton(
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
+    val colors = LocalKeyboardColors.current
     val scale by animateFloatAsState(
         targetValue = if (isPressed) {
-            0.97f
+            KeyboardAnimations.ACTION_BUTTON_PRESSED_SCALE
         } else {
             1f
         }, label = "scale"
@@ -42,7 +42,7 @@ fun ActionButton(
 
     Box(
         modifier = modifier
-            .height(height = 42.dp)
+            .height(height = KeyboardDimens.ActionButtonHeight)
             .scale(scale = scale)
             .combinedClickable(
                 interactionSource = interactionSource,
@@ -53,22 +53,20 @@ fun ActionButton(
     ) {
         val baseColor =
             if (containerColor == Color.White) {
-                Color.White.copy(alpha = 0.7f)
+                colors.keyReleased.copy(alpha = 0.7f)
             } else {
                 containerColor.copy(
                     alpha = 0.8f
                 )
             }
-        val shadowColor = Color(color = 0x33000000)
-        val highlightColor = Color.White.copy(alpha = 0.4f)
 
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .offset(x = 1.dp, y = 2.dp)
+                .offset(x = 1.dp, y = KeyboardDimens.ActionButtonShadowY)
                 .background(
-                    color = shadowColor,
-                    shape = RoundedCornerShape(size = 8.dp)
+                    color = colors.actionShadow,
+                    shape = RoundedCornerShape(size = KeyboardDimens.ActionButtonCornerRadius)
                 )
         )
 
@@ -76,20 +74,20 @@ fun ActionButton(
             modifier = Modifier
                 .fillMaxSize()
                 .graphicsLayer {
-                    translationY = if (isPressed) 2.dp.toPx() else 0f
+                    translationY = if (isPressed) KeyboardDimens.ActionButtonShadowY.toPx() else 0f
                 }
                 .background(
-                    Brush.verticalGradient(colors = listOf(highlightColor, baseColor)),
-                    shape = RoundedCornerShape(size = 8.dp)
+                    Brush.verticalGradient(colors = listOf(colors.actionHighlight, baseColor)),
+                    shape = RoundedCornerShape(size = KeyboardDimens.ActionButtonCornerRadius)
                 )
-                .padding(bottom = if (isPressed) 0.dp else 2.dp),
+                .padding(bottom = if (isPressed) 0.dp else KeyboardDimens.ActionButtonShadowY),
             contentAlignment = Alignment.Center
         ) {
             if (text != null) {
                 Text(
                     text = text,
-                    fontSize = 14.sp,
-                    color = Color(color = 0xFF01579B),
+                    fontSize = KeyboardDimens.ActionButtonTextSize,
+                    color = colors.textReleased,
                     fontWeight = FontWeight.Bold
                 )
             } else if (icon != null) {

@@ -10,6 +10,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
+import androidx.compose.ui.unit.IntOffset
+import kotlin.math.roundToInt
+
 @Composable
 fun KeyboardLayout(
     layout: List<List<String>>,
@@ -24,7 +27,7 @@ fun KeyboardLayout(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 4.dp),
+                .padding(horizontal = KeyboardDimens.RowHorizontalPadding),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -38,7 +41,10 @@ fun KeyboardLayout(
                         val phase = (currentTime - lastActivityTime) / 300f
                         kotlin.math.sin(x = phase + rowIndex * 0.5f + colIndex * 0.3f) * 6f
                     } else 0f,
-                    animationSpec = spring(dampingRatio = 0.6f, stiffness = Spring.StiffnessVeryLow),
+                    animationSpec = spring(
+                        dampingRatio = KeyboardAnimations.IDLE_WAVE_DAMPING,
+                        stiffness = Spring.StiffnessVeryLow
+                    ),
                     label = "idle_wave"
                 )
 
@@ -47,13 +53,16 @@ fun KeyboardLayout(
                         .weight(weight = 1f)
                         .then(
                             other = if (isLandscape) {
-                                Modifier.height(height = 40.dp)
+                                Modifier.height(height = KeyboardDimens.LandscapeKeyHeight)
                             } else {
                                 Modifier.aspectRatio(ratio = 1f)
                             }
                         )
-                        .offset(y = idleOffset.dp)
-                        .padding(horizontal = 2.dp, vertical = 2.dp),
+                        .offset { IntOffset(x = 0, y = idleOffset.dp.toPx().roundToInt()) }
+                        .padding(
+                            horizontal = KeyboardDimens.KeyPadding,
+                            vertical = KeyboardDimens.KeyPadding
+                        ),
                     text = key,
                     altText = when (key) {
                         "Е" -> "Ё"

@@ -7,16 +7,15 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-
 @Composable
 fun KeyBackground() {
+    val colors = LocalKeyboardColors.current
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .offset(x = 1.dp, y = KeyboardDimens.ShadowOffset)
+            .offset(x = KeyboardDimens.ShadowOffsetX, y = KeyboardDimens.ShadowOffsetY)
             .background(
-                color = KeyboardColors.Shadow,
+                color = colors.shadow,
                 shape = RoundedCornerShape(size = KeyboardDimens.KeyCornerRadius)
             )
     )

@@ -1,5 +1,6 @@
 package com.app.keyboarddikra
 
+@Suppress("unused")
 object KeyboardLayouts {
     val QWERTY = listOf(
         listOf("Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"),

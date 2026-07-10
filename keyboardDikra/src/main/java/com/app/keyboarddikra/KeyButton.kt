@@ -37,7 +37,7 @@ fun KeyButton(
     )
     val rotation by animateFloatAsState(
         targetValue = if (isPressed) {
-            -2f
+            KeyboardAnimations.KEY_ROTATION_PRESSED
         } else {
             0f
         },
@@ -63,7 +63,7 @@ fun KeyButton(
     val waterLevel by animateFloatAsState(
         targetValue = pressCount / KeyboardAnimations.MAX_PRESS_COUNT.toFloat(),
         animationSpec = spring(
-            dampingRatio = 0.7f,
+            dampingRatio = KeyboardAnimations.WATER_SPRING_DAMPING,
             stiffness = Spring.StiffnessVeryLow
         ),
         label = "water_level"
@@ -85,7 +85,7 @@ fun KeyButton(
                     scope.launch {
                         splashAnim.snapTo(targetValue = 0f)
                         splashAnim.animateTo(
-                            targetValue = 1.5f,
+                            targetValue = KeyboardAnimations.SPLASH_MAX_VALUE,
                             animationSpec = tween(
                                 durationMillis = KeyboardAnimations.SPLASH_DURATION,
                                 easing = LinearOutSlowInEasing
@@ -98,7 +98,7 @@ fun KeyButton(
                     if (pressCount == KeyboardAnimations.MAX_PRESS_COUNT) {
                         scope.launch {
                             explosionAnim.animateTo(
-                                targetValue = 0.4f,
+                                targetValue = KeyboardAnimations.EXPLOSION_SCALE,
                                 animationSpec = tween(durationMillis = KeyboardAnimations.EXPLOSION_IN_DURATION)
                             )
                             explosionAnim.animateTo(

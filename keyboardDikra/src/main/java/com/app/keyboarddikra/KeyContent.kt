@@ -24,6 +24,7 @@ fun KeyContent(
     pressCount: Int,
     splashValue: Float
 ) {
+    val colors = LocalKeyboardColors.current
     val crackPath = remember { Path() }
 
     Box(
@@ -33,9 +34,9 @@ fun KeyContent(
             .clip(shape = RoundedCornerShape(size = KeyboardDimens.KeyCornerRadius))
             .background(
                 color = if (isPressed) {
-                    KeyboardColors.KeyPressed
+                    colors.keyPressed
                 } else {
-                    KeyboardColors.KeyReleased
+                    colors.keyReleased
                 }
             )
     ) {
@@ -47,8 +48,8 @@ fun KeyContent(
                 .background(
                     Brush.verticalGradient(
                         colors = listOf(
-                            KeyboardColors.WaterGradientStart,
-                            KeyboardColors.WaterGradientEnd
+                            colors.waterGradientStart,
+                            colors.waterGradientEnd
                         )
                     )
                 )
@@ -61,9 +62,9 @@ fun KeyContent(
             fontSize = KeyboardDimens.KeyTextSize,
             fontWeight = FontWeight.Bold,
             color = if (isPressed) {
-                KeyboardColors.TextPressed
+                colors.textPressed
             } else {
-                KeyboardColors.TextReleased
+                colors.textReleased
             }
         )
     }

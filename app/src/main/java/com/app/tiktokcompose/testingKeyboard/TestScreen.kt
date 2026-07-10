@@ -48,12 +48,9 @@ fun TestScreenKeyBoard() {
         }
 
         CustomKeyboard(
+            state = keyboardState,
             visible = isKeyboardVisible,
             layout = KeyboardLayouts.QWERTY,
-            onKeyClick = keyboardState::handleKeyClick,
-            onDeleteClick = keyboardState::handleDeleteClick,
-            onDeleteAllClick = keyboardState::handleDeleteAll,
-            onSpaceClick = keyboardState::handleSpaceClick,
             onConfirmClick = {
                 isKeyboardVisible = false
                 focusManager.clearFocus()
