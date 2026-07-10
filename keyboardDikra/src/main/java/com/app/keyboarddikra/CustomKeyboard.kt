@@ -31,12 +31,15 @@ fun CustomKeyboard(
     onDeleteClick: () -> Unit = {},
     onDeleteAllClick: () -> Unit = {},
     onSpaceClick: () -> Unit = {},
+    onLanguageChange: () -> Unit = {},
     onConfirmClick: () -> Unit = {},
 ) {
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
     val haptic = LocalHapticFeedback.current
     val isDark = isSystemInDarkTheme()
+
+    val currentLayout = state?.currentLayout ?: layout
 
     val colors = remember(isDark) {
         if (isDark) DarkKeyboardColors else LightKeyboardColors
@@ -148,7 +151,7 @@ fun CustomKeyboard(
                     )
                 ) {
                     KeyboardLayout(
-                        layout = layout,
+                        layout = currentLayout,
                         currentTime = currentTime,
                         lastActivityTime = lastActivityTime,
                         isLandscape = isLandscape,
@@ -175,6 +178,11 @@ fun CustomKeyboard(
                             playSoundAndHaptic()
                             state?.handleSpaceClick()
                             onSpaceClick()
+                        },
+                        onLanguageChange = {
+                            playSoundAndHaptic()
+                            state?.toggleLanguage()
+                            onLanguageChange()
                         },
                         onConfirmClick = {
                             playSoundAndHaptic()

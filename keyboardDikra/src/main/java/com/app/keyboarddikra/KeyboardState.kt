@@ -6,9 +6,22 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 
-class KeyboardState {
+class KeyboardState(
+    initialLayout: List<List<String>> = KeyboardLayouts.QWERTY
+) {
     var textFieldValue by mutableStateOf(value = TextFieldValue(""))
         private set
+
+    var currentLayout by mutableStateOf(value = initialLayout)
+        private set
+
+    fun toggleLanguage() {
+        currentLayout = if (currentLayout == KeyboardLayouts.QWERTY) {
+            KeyboardLayouts.RUSSIAN
+        } else {
+            KeyboardLayouts.QWERTY
+        }
+    }
 
     fun handleKeyClick(char: String) {
         val selection = textFieldValue.selection

@@ -16,6 +16,7 @@ fun KeyboardActions(
     onDeleteClick: () -> Unit,
     onDeleteAllClick: () -> Unit,
     onSpaceClick: () -> Unit,
+    onLanguageChange: () -> Unit,
     onConfirmClick: () -> Unit
 ) {
     val colors = LocalKeyboardColors.current
@@ -43,6 +44,7 @@ fun KeyboardActions(
         ActionButton(
             text = "Space",
             onClick = onSpaceClick,
+            onLongClick = onLanguageChange,
             modifier = Modifier.weight(weight = 2f)
         )
         ActionButton(
