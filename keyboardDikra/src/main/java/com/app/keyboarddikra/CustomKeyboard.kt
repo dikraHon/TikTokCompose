@@ -41,7 +41,7 @@ fun CustomKeyboard(
 
     val currentLayout = state?.currentLayout ?: layout
 
-    val colors = remember(isDark) {
+    val colors = remember(key1 = isDark) {
         if (isDark) DarkKeyboardColors else LightKeyboardColors
     }
 
@@ -49,7 +49,7 @@ fun CustomKeyboard(
 
     val soundPool = remember {
         SoundPool.Builder()
-            .setMaxStreams(5)
+            .setMaxStreams(3)
             .setAudioAttributes(
                 AudioAttributes.Builder()
                     .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
@@ -59,25 +59,29 @@ fun CustomKeyboard(
             .build()
     }
 
-    val soundId2 = remember {
-        soundPool.load(
-            context,
-            R.raw.sound_of_droplets_v2,
-            1
-        )
+    var soundId by remember { mutableIntStateOf(value = 0) }
+
+    LaunchedEffect(key1 = Unit) {
+        try {
+            soundId = soundPool.load(context, R.raw.sound_of_droplets_v2, 1)
+        } catch (_: Exception) { }
     }
 
-    val playSoundAndHaptic = {
-        lastActivityTime = System.currentTimeMillis()
-        soundPool.play(
-            soundId2,
-            0.4f,
-            0.4f,
-            0,
-            0,
-            1f
-        )
-        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+    val playSoundAndHaptic = remember(key1 = soundPool, key2 = soundId) {
+        {
+            lastActivityTime = System.currentTimeMillis()
+            if (soundId != 0) {
+                soundPool.play(
+                    soundId,
+                    0.4f,
+                    0.4f,
+                    0,
+                    0,
+                    1f
+                )
+            }
+            haptic.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.LongPress)
+        }
     }
 
     var currentTime by remember { mutableLongStateOf(value = System.currentTimeMillis()) }
@@ -94,7 +98,12 @@ fun CustomKeyboard(
     }
 
     DisposableEffect(key1 = Unit) {
-        onDispose { soundPool.release() }
+        onDispose {
+            try {
+                soundPool.release()
+            } catch (_: Exception) {
+            }
+        }
     }
 
     val infiniteTransition = rememberInfiniteTransition(label = "water_flow")

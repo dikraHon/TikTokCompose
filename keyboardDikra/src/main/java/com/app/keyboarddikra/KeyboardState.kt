@@ -26,16 +26,15 @@ class KeyboardState(
     fun handleKeyClick(char: String) {
         val selection = textFieldValue.selection
         val oldText = textFieldValue.text
-        val newText = oldText.substring(
-            0,
-            selection.start
-        ) + char + oldText.substring(startIndex = selection.end)
+        val newText = oldText.replaceRange(
+            startIndex = selection.start,
+            endIndex = selection.end,
+            replacement = char
+        )
         val newCursorPos = selection.start + char.length
         textFieldValue = textFieldValue.copy(
             text = newText,
-            selection = TextRange(
-                index = newCursorPos
-            )
+            selection = TextRange(index = newCursorPos)
         )
     }
 
@@ -43,22 +42,17 @@ class KeyboardState(
         val selection = textFieldValue.selection
         val oldText = textFieldValue.text
         if (selection.start > 0 || selection.end > selection.start) {
-            val newText = if (selection.end > selection.start) {
-                oldText.substring(0, selection.start) + oldText.substring(startIndex = selection.end)
-            } else {
-                oldText.substring(0, selection.start - 1) + oldText.substring(startIndex = selection.start)
-            }
-            val newCursorPos =
-                if (selection.end > selection.start) {
-                    selection.start
-                } else {
-                    selection.start - 1
-                }
-            textFieldValue =
-                textFieldValue.copy(
-                    text = newText,
-                    selection = TextRange(index = newCursorPos)
-                )
+            val start = if (selection.end > selection.start) selection.start else selection.start - 1
+            val end = if (selection.end > selection.start) selection.end else selection.start
+            val newText = oldText.replaceRange(
+                startIndex = start,
+                endIndex = end,
+                replacement = ""
+            )
+            textFieldValue = textFieldValue.copy(
+                text = newText,
+                selection = TextRange(index = start)
+            )
         }
     }
 

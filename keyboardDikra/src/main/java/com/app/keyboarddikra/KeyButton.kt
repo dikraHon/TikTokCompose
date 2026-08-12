@@ -68,6 +68,7 @@ fun KeyButton(
         ),
         label = "water_level"
     )
+
     Box(
         modifier = modifier
             .scale(
@@ -92,10 +93,7 @@ fun KeyButton(
                             )
                         )
                     }
-                    if (pressCount < KeyboardAnimations.MAX_PRESS_COUNT) {
-                        pressCount++
-                    }
-                    if (pressCount == KeyboardAnimations.MAX_PRESS_COUNT) {
+                    if (pressCount + 1 >= KeyboardAnimations.MAX_PRESS_COUNT) {
                         scope.launch {
                             explosionAnim.animateTo(
                                 targetValue = KeyboardAnimations.EXPLOSION_SCALE,
@@ -107,7 +105,10 @@ fun KeyButton(
                             )
                             pressCount = 0
                         }
+                    } else {
+                        pressCount++
                     }
+
                     onKey(text)
                 },
                 onLongClick = {

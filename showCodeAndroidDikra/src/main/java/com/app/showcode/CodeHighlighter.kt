@@ -1,6 +1,5 @@
 package com.app.showcode
 
-import android.nfc.Tag
 import android.util.Log
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString

@@ -25,7 +25,9 @@ fun KeyContent(
     splashValue: Float
 ) {
     val colors = LocalKeyboardColors.current
-    val crackPath = remember { Path() }
+    val crackPath = remember(key1 = pressCount) {
+        if (pressCount > 0) Path() else null
+    }
 
     Box(
         modifier = Modifier
@@ -40,22 +42,30 @@ fun KeyContent(
                 }
             )
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(fraction = waterLevel)
-                .align(alignment = Alignment.BottomCenter)
-                .background(
-                    Brush.verticalGradient(
-                        colors = listOf(
-                            colors.waterGradientStart,
-                            colors.waterGradientEnd
+        if (waterLevel > 0.01f) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(fraction = waterLevel)
+                    .align(alignment = Alignment.BottomCenter)
+                    .background(
+                        Brush.verticalGradient(
+                            colors = listOf(
+                                colors.waterGradientStart,
+                                colors.waterGradientEnd
+                            )
                         )
                     )
-                )
-        )
-        CracksEffect(path = crackPath, pressCount = pressCount)
-        SplashEffect(value = splashValue)
+            )
+        }
+        if (pressCount > 0 && crackPath != null) {
+            CracksEffect(path = crackPath, pressCount = pressCount)
+        }
+
+        if (splashValue > 0.01f) {
+            SplashEffect(value = splashValue)
+        }
+
         Text(
             text = text,
             modifier = Modifier.align(alignment = Alignment.Center),
