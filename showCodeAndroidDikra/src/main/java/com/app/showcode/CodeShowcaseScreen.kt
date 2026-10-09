@@ -1,15 +1,15 @@
-package com.app.tiktokcompose.codeShow
+package com.app.showcode
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import com.app.showcode.CodeLoader
-import com.app.showcode.CodeScrollingView
 
 @Composable
-fun CodeShowcaseScreen() {
+fun CodeShowcaseScreen(
+    modifier: Modifier = Modifier
+) {
     val context = LocalContext.current
     val codeFiles = remember { CodeLoader.listCodeFiles(context) }
     var selectedFile by remember { mutableStateOf(value = codeFiles.firstOrNull() ?: "") }
@@ -22,7 +22,10 @@ fun CodeShowcaseScreen() {
         }
     }
 
-    Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+    Surface(
+        modifier = modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
+    ) {
         CodeScrollingView(code = currentCode, typingSpeed = 0L)
     }
 }

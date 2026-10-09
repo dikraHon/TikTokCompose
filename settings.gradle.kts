@@ -26,4 +26,5 @@ rootProject.name = "TikTokCompose"
 include(":app")
 include(":keyboardDikra")
 include(":showCodeAndroidDikra")
- 
+include(":riveExample")
+include(":hazeEffects")

@@ -34,8 +34,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":keyboardDikra"))
-    implementation(project(":showCodeAndroidDikra"))
+    implementation(project(projectPath = ":keyboardDikra"))
+    implementation(project(projectPath = ":showCodeAndroidDikra"))
+    implementation(project(projectPath = ":riveExample"))
+    implementation(project(projectPath = ":hazeEffects"))
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.material3)
@@ -50,4 +52,5 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
+    implementation(libs.rive.android)
 }

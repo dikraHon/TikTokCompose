@@ -1,7 +1,6 @@
 package com.app.keyboarddikra
 
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -19,7 +18,6 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ActionButton(
     modifier: Modifier = Modifier,

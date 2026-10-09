@@ -10,7 +10,9 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/hazeEffects" />
             <option value="$PROJECT_DIR$/keyboardDikra" />
+            <option value="$PROJECT_DIR$/riveExample" />
             <option value="$PROJECT_DIR$/showCodeAndroidDikra" />
           </set>
         </option>
